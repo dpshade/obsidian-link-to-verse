@@ -12,7 +12,7 @@ export const TEMPLATE_PRESETS = {
     linkTemplate: 'olivetree://bible/{{book}}.{{chapter}}.{{verse}}',
   },
   routeBible: {
-    label: 'Route Bible',
+    label: 'route.bible',
     linkTemplate: 'https://route.bible/?q={{verse}}&utm_source=obsidian_link_to_verse&utm_medium=link',
   },
 } as const;
