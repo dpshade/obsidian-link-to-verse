@@ -2,7 +2,7 @@ import { App, Editor, MarkdownView, Plugin, PluginSettingTab, Setting } from 'ob
 import { parseBibleReference } from '@j316/bible-ref-parser';
 import type { BibleRange, ParsedBibleReference } from '@j316/bible-ref-parser/dist/api';
 import type { LinkToVersePluginSettings } from './api';
-import { TEMPLATE_PRESETS, detectPresetFromTemplate, getPresetTemplate } from './presets';
+import { TEMPLATE_PRESETS, detectPresetFromTemplate, getPresetTemplate, type TemplatePresetId } from './presets';
 
 const DEFAULT_SETTINGS: LinkToVersePluginSettings = {
   bibleLanguage: 'en',
@@ -107,7 +107,7 @@ export default class LinkToVersePlugin extends Plugin {
 
   async loadSettings() {
     this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
-    this.settings.selectedPreset = detectPresetFromTemplate(this.settings.linkTemplate || '') || this.settings.selectedPreset;
+    this.settings.selectedPreset = detectPresetFromTemplate(this.settings.linkTemplate || '');
   }
 
   async saveSettings() {
@@ -183,7 +183,7 @@ class LinkToVerseSettingTab extends PluginSettingTab {
         dropdown
           .setValue(this.plugin.settings.selectedPreset)
           .onChange(async (value) => {
-            const presetId = value as keyof typeof TEMPLATE_PRESETS;
+            const presetId = value as TemplatePresetId;
             this.plugin.settings.selectedPreset = presetId;
 
             if (presetId !== 'custom') {
